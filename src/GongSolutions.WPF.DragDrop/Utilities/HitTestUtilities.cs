@@ -1,9 +1,10 @@
+using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Controls.Primitives;
 
 namespace GongSolutions.Wpf.DragDrop.Utilities
 {
@@ -109,8 +110,13 @@ namespace GongSolutions.Wpf.DragDrop.Utilities
             return IsNotPartOfSender(sender, e.OriginalSource, e.GetTouchPoint((IInputElement)e.OriginalSource).Position);
         }
 
+        /// <summary>This overwrite private <see cref="IsNotPartOfSender(object, object, Point)"/>.</summary>
+        public static Func<object, object, Point, bool>? IsNotPartOfSenderAlternate { get; set; }
+
         private static bool IsNotPartOfSender(object sender, object originalSource, Point position)
         {
+            if (IsNotPartOfSenderAlternate is { } v) return v(sender, originalSource, position);
+
             if (originalSource is not Visual visual)
             {
                 return false;
@@ -139,3 +145,35 @@ namespace GongSolutions.Wpf.DragDrop.Utilities
         }
     }
 }
+
+// e.g.
+//private static bool IsNotPartOfSender(object sender, object originalSource, Point position)
+//{
+//    if (originalSource is not Visual visual)
+//    {
+//        return false;
+//    }
+
+//    var hit = VisualTreeHelper.HitTest(visual, position);
+//    if (hit is null)
+//    {
+//        return false;
+//    }
+
+//    if (visual == sender)
+//    {
+//        return false;
+//    }
+
+//    var parent = VisualTreeHelper.GetParent(visual.FindVisualTreeRoot());
+//    //var item = VisualTreeHelper.GetParent(e.OriginalSource as DependencyObject);
+
+//    var isInHeaderGrid = false;
+//    while (parent != null && parent != sender)
+//    {
+//        if (parent is Grid v1 && v1.Name == "HeaderGrid") isInHeaderGrid = false;
+//        parent = VisualTreeHelper.GetParent(parent);
+//    }
+//    if (!isInHeaderGrid) return true;
+//    return parent != sender;
+//}
