@@ -1,11 +1,11 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Collections.Generic;
 using System.Windows.Media.Media3D;
-using JetBrains.Annotations;
 
 namespace GongSolutions.Wpf.DragDrop.Utilities
 {
@@ -37,7 +37,7 @@ namespace GongSolutions.Wpf.DragDrop.Utilities
             return null;
         }
 
-        internal static DependencyObject FindVisualTreeRoot(this DependencyObject d)
+        public static DependencyObject FindVisualTreeRoot(this DependencyObject d)
         {
             var current = d;
             var result = d;

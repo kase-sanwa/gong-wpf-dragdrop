@@ -171,7 +171,7 @@ namespace GongSolutions.Wpf.DragDrop.Utilities
 //    var isInHeaderGrid = false;
 //    while (parent != null && parent != sender)
 //    {
-//        if (parent is Grid v1 && v1.Name == "HeaderGrid") isInHeaderGrid = false;
+//        if (parent is Grid v1 && v1.Name == "HeaderGrid") isInHeaderGrid = true;
 //        parent = VisualTreeHelper.GetParent(parent);
 //    }
 //    if (!isInHeaderGrid) return true;
